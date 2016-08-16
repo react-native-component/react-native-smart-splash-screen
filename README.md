@@ -99,6 +99,44 @@ protected List<ReactPackage> getPackages() {
 
 ```
 
+* In `android/app/**/styles.xml`
+
+```
+...
+<!-- add LaunchScreen style -->
+<style name="LaunchScreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowBackground">@drawable/splash</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowFullscreen">false</item>
+    <item name="android:windowContentOverlay">@null</item>
+</style>
+...
+```
+
+* In `android/app/**/AndroidManifest.xml`
+
+```
+...
+<application
+      android:allowBackup="true"
+      android:label="@string/app_name"
+      android:icon="@mipmap/ic_launcher"
+      android:theme="@style/AppTheme">
+      <activity
+        android:name=".MainActivity"
+        android:label="@string/app_name"
+          android:configChanges="orientation|keyboardHidden"
+          android:theme="@style/LaunchScreen"> <!-- use LaunchScreen style -->
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity>
+      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+</application>
+...
+```
+
 ## Usage
 
 ```js
