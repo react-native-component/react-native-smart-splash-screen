@@ -62,7 +62,7 @@ return YES;
 ```
 ...
 include ':react-native-smart-splashscreen'
-project(':react-native-smart-splashscreen').projectDir = new File(rootProject.projectDir, '../react-native-smart-splash-screen/android')
+project(':react-native-smart-splashscreen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-smart-splash-screen/android')
 ```
 
 * In `android/app/build.gradle`
