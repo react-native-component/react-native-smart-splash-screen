@@ -78,7 +78,7 @@ dependencies {
 
 * if you want change image, replace res/drawable/splash.png
 
-* In MainActivity.java
+* In MainActivity.java (This step is available for react-native 0.25~0.29, if you're using react-native 0.30+, ignore this step and see next step)
 
 ```
 ...
@@ -98,6 +98,51 @@ protected List<ReactPackage> getPackages() {
 ...
 
 ```
+
+* If you're using react-native 0.30+, follow these steps
+
+    1. remove ReactNativeHost `final` defination, and add next codes in MainApplication.java
+
+    ```js
+    private ReactNativeHost reactNativeHost = new ReactNativeHost(this) {
+    //private final ReactNativeHost reactNativeHost = new ReactNativeHost(this) {
+        ...
+    }
+
+    public void setReactNativeHost(ReactNativeHost reactNativeHost) {
+        this.reactNativeHost = reactNativeHost;
+    }
+    ```
+
+    2. second step: add next codes in MainActivity.java
+
+    ```js
+    /**
+     * A subclass may override this method if it needs to use a custom {@link ReactRootView}.
+     */
+    @Override
+    protected ReactRootView createRootView() {
+
+        MainApplication mainApplication=(MainApplication)this.getApplication();
+        mainApplication.setReactNativeHost( new ReactNativeHost(mainApplication) {
+            @Override
+            protected boolean getUseDeveloperSupport() {
+                return BuildConfig.DEBUG;
+            }
+
+            @Override
+            protected List<ReactPackage> getPackages() {
+                return Arrays.<ReactPackage>asList(
+                        new MainReactPackage(),
+                        new RCTSplashScreenPackage(MainActivity.this)  //register Module
+                );
+            }
+
+        });
+
+        return super.createRootView();
+    }
+    ```
 
 * In `android/app/**/styles.xml`
 
