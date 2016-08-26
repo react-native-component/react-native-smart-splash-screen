@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -139,8 +140,9 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
 
         Bitmap bitmap = BitmapFactory.decodeResource(getActivity().getResources(), drawableId);
 
-        int navigationBarHeight = getNavigationBarHeight();
+        int navigationBarHeight = 0;    //getNavigationBarHeight();
         int statusBarHeight = getStatusBarHeight();
+
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         int newWidth = screenWidth;
