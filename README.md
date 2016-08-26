@@ -101,7 +101,7 @@ protected List<ReactPackage> getPackages() {
 
 * If you're using react-native 0.30+, follow these steps
 
-    1. remove ReactNativeHost `final` defination, and add next codes in MainApplication.java
+1. remove ReactNativeHost `final` defination, and add next codes in MainApplication.java
 
     ```js
     private ReactNativeHost reactNativeHost = new ReactNativeHost(this) {
@@ -114,7 +114,7 @@ protected List<ReactPackage> getPackages() {
     }
     ```
 
-    2. add next codes in MainActivity.java
+2. add next codes in MainActivity.java
 
     ```js
     /**
