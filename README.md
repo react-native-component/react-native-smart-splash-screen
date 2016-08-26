@@ -114,7 +114,7 @@ protected List<ReactPackage> getPackages() {
     }
     ```
 
-    2. second step: add next codes in MainActivity.java
+    2. add next codes in MainActivity.java
 
     ```js
     /**
