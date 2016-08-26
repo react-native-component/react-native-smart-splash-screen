@@ -1,6 +1,6 @@
 {
   "name": "@react-native-component/react-native-smart-splash-screen",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A smart splash screen for React Native apps",
   "main": "SplashScreen.js",
   "scripts": {
