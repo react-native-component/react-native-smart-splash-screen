@@ -210,6 +210,6 @@ componentDidMount () {
   * delay: determine the delay of animation
 
 
-
+[0]: https://github.com/cyqresig/ReactNativeComponentDemos
 [1]: http://cyqresig.github.io/img/react-native-smart-splash-screen-preview-ios-v1.0.0.gif
 [2]: http://cyqresig.github.io/img/react-native-smart-splash-screen-preview-android-v1.0.3.gif
