@@ -182,6 +182,11 @@ protected List<ReactPackage> getPackages() {
 ...
 ```
 
+## Full Demo
+
+see [ReactNativeComponentDemos][0]
+
+
 ## Usage
 
 ```js
