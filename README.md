@@ -76,7 +76,9 @@ dependencies {
 }
 ```
 
-* if you want change image, replace res/drawable/splash.png
+* Drag `drawable/splash.png` to `android/app/src/main/res/`
+
+* If you want change image, replace `res/drawable/splash.png`
 
 * In MainActivity.java (This step is available for react-native 0.25~0.29, if you're using react-native 0.30+, ignore this step and see next step)
 
@@ -117,12 +119,11 @@ protected List<ReactPackage> getPackages() {
     * add the following codes in MainActivity.java
 
     ```js
-    /**
-     * A subclass may override this method if it needs to use a custom {@link ReactRootView}.
-     */
+    ...
+    import com.reactnativecomponent.splashscreen.RCTSplashScreenPackage;    //import package
+    ...
     @Override
-    protected ReactRootView createRootView() {
-
+    protected void onCreate(Bundle savedInstanceState) {
         MainApplication mainApplication=(MainApplication)this.getApplication();
         mainApplication.setReactNativeHost( new ReactNativeHost(mainApplication) {
             @Override
@@ -139,8 +140,7 @@ protected List<ReactPackage> getPackages() {
             }
 
         });
-
-        return super.createRootView();
+        super.onCreate(savedInstanceState);
     }
     ```
 
