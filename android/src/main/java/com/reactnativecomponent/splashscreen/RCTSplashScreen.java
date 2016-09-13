@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -26,8 +27,16 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class RCTSplashScreen extends ReactContextBaseJavaModule {
+
+    private static final int UIAnimationNone = 0;
+    private static final int UIAnimationFade = 1;
+    private static final int UIAnimationScale = 2;
 
     private static Dialog dialog;
     private ImageView imageView;
@@ -50,7 +59,10 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void close(final String animationType, final int duration, final int delay) {
+    public void close(final int animationType, final int duration, int delay) {
+        if(animationType == UIAnimationNone) {
+            delay = 0;
+        }
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -60,13 +72,13 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
     }
 
 
-    private void removeSplashScreen(final String animationType, final int duration) {
+    private void removeSplashScreen(final int animationType,final int duration) {
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 if (dialog != null && dialog.isShowing()) {
                     AnimationSet animationSet = new AnimationSet(true);
 
-                    if("scale".equals(animationType)) {
+                    if(animationType == UIAnimationScale) {
                         AlphaAnimation fadeOut = new AlphaAnimation(1, 0);
                         fadeOut.setDuration(duration);
                         animationSet.addAnimation(fadeOut);
@@ -75,9 +87,14 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
                         scale.setDuration(duration);
                         animationSet.addAnimation(scale);
                     }
-                    else {
+                    else if(animationType == UIAnimationFade) {
                         AlphaAnimation fadeOut = new AlphaAnimation(1, 0);
                         fadeOut.setDuration(duration);
+                        animationSet.addAnimation(fadeOut);
+                    }
+                    else {
+                        AlphaAnimation fadeOut = new AlphaAnimation(1, 0);
+                        fadeOut.setDuration(0);
                         animationSet.addAnimation(fadeOut);
                     }
 
@@ -121,15 +138,15 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
         return height;
     }
 
-    private int getNavigationBarHeight() {
-        int height = 0;
-        Resources resources = getActivity().getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            height = resources.getDimensionPixelSize(resourceId);
-        }
-        return height;
-    }
+//    private int getNavigationBarHeight() {
+//        int height = 0;
+//        Resources resources = getActivity().getResources();
+//        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+//        if (resourceId > 0) {
+//            height = resources.getDimensionPixelSize(resourceId);
+//        }
+//        return height;
+//    }
 
     private Bitmap getClipBitmap(int drawableId) {
 
@@ -192,6 +209,25 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
                 dialog.setContentView(imageView);
                 dialog.setCancelable(false);
                 dialog.show();
+            }
+        });
+    }
+
+    @Nullable
+    @Override
+    public Map<String, Object> getConstants() {
+        return Collections.unmodifiableMap(new HashMap<String, Object>() {
+            {
+                put("animationType", getAnimationTypes());
+            }
+            private Map<String, Object> getAnimationTypes() {
+                return Collections.unmodifiableMap(new HashMap<String, Object>() {
+                    {
+                        put("none", UIAnimationNone);
+                        put("fade", UIAnimationFade);
+                        put("scale", UIAnimationScale);
+                    }
+                });
             }
         });
     }
