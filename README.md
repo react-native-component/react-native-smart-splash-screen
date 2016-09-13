@@ -194,7 +194,7 @@ see [ReactNativeComponentDemos][0]
 import SplashScreen from 'react-native-smart-splash-screen'
 ...
 componentDidMount () {
-     SplashScreen.close('scale', 850, 500)
+     SplashScreen.close(SplashScreen.animationType.scale, 850, 500)
 }
 ...
 
@@ -205,7 +205,7 @@ componentDidMount () {
 * close(animationType, duration, delay)
   close splash screen with custom animation
 
-  * animationType: determine the type of animation. enum('opacity', 'scale')
+  * animationType: determine the type of animation. enum(animationType.none, animationType.fade, animationType.scale)
   * duration: determine the duration of animation
   * delay: determine the delay of animation
 
