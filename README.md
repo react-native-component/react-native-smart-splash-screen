@@ -1,4 +1,10 @@
 # react-native-smart-splash-screen
+
+[![npm](https://img.shields.io/npm/v/react-native-smart-splash-screen.svg)](https://www.npmjs.com/package/react-native-smart-splash-screen)
+[![npm](https://img.shields.io/npm/dm/react-native-smart-splash-screen.svg)](https://www.npmjs.com/package/react-native-smart-splash-screen)
+[![npm](https://img.shields.io/npm/dt/react-native-smart-splash-screen.svg)](https://www.npmjs.com/package/react-native-smart-splash-screen)
+[![npm](https://img.shields.io/npm/l/react-native-smart-splash-screen.svg)](https://github.com/react-native-component/react-native-smart-splash-screen/blob/master/LICENSE)
+
 A smart splash screen for React Native apps, written in JS, oc and java for cross-platform support.
 It works on iOS and Android.
 
