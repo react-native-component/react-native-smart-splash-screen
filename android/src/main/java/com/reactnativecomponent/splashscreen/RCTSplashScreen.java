@@ -209,6 +209,9 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
                 dialog.setContentView(imageView);
                 dialog.setCancelable(false);
                 dialog.show();
+
+                //remove window background image to reduce overdrawing
+                getActivity().getWindow().setBackgroundDrawable(null);
             }
         });
     }
