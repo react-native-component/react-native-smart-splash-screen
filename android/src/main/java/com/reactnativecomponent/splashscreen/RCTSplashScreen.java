@@ -113,6 +113,9 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
                             dialog.dismiss();
                             dialog = null;
                             imageView = null;
+
+                            //remove window background image to reduce overdrawing
+                            getActivity().getWindow().setBackgroundDrawable(null);
                         }
                     });
                 }
@@ -209,9 +212,6 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
                 dialog.setContentView(imageView);
                 dialog.setCancelable(false);
                 dialog.show();
-
-                //remove window background image to reduce overdrawing
-                getActivity().getWindow().setBackgroundDrawable(null);
             }
         });
     }
