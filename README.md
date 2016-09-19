@@ -155,11 +155,12 @@ protected List<ReactPackage> getPackages() {
 ```
 ...
 <!-- add LaunchScreen style -->
-<style name="LaunchScreen" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="android:windowBackground">@drawable/splash</item>
-    <item name="android:windowNoTitle">true</item>
-    <item name="android:windowFullscreen">false</item>
-    <item name="android:windowContentOverlay">@null</item>
+<style name="LaunchScreen" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
 </style>
 ...
 ```
