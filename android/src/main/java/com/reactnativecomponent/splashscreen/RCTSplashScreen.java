@@ -154,34 +154,42 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
     private Bitmap getClipBitmap(int drawableId) {
 
         Resources resources = getActivity().getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        int screenWidth = dm.widthPixels;
-        int screenHeight = dm.heightPixels;
 
         Bitmap bitmap = BitmapFactory.decodeResource(getActivity().getResources(), drawableId);
 
-        int navigationBarHeight = 0;    //getNavigationBarHeight();
-        int statusBarHeight = getStatusBarHeight();
+        if ((getActivity().getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN)
+                != WindowManager.LayoutParams.FLAG_FULLSCREEN) {
 
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
-        int newWidth = screenWidth;
-        int newHeight = screenHeight + navigationBarHeight;
+            DisplayMetrics dm = resources.getDisplayMetrics();
+            int screenWidth = dm.widthPixels;
+            int screenHeight = dm.heightPixels;
 
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-        Matrix matrix = new Matrix();
-        matrix.postScale(scaleWidth, scaleHeight);
-        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width,
-                height, matrix, true);
-        bitmap.recycle();
+            int navigationBarHeight = 0;    //getNavigationBarHeight();
+            int statusBarHeight = 0;   //getStatusBarHeight();
 
-        int y = statusBarHeight;
-        int x = 0;
+            statusBarHeight = getStatusBarHeight();
 
-        bitmap = Bitmap.createBitmap(resizedBitmap, x, y, resizedBitmap.getWidth(),
-                resizedBitmap.getHeight() - y - navigationBarHeight, null, false);
-        resizedBitmap.recycle();
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
+            int newWidth = screenWidth;
+            int newHeight = screenHeight + navigationBarHeight;
+
+            float scaleWidth = ((float) newWidth) / width;
+            float scaleHeight = ((float) newHeight) / height;
+            Matrix matrix = new Matrix();
+            matrix.postScale(scaleWidth, scaleHeight);
+            Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width,
+                    height, matrix, true);
+            bitmap.recycle();
+
+            int y = statusBarHeight;
+            int x = 0;
+
+            bitmap = Bitmap.createBitmap(resizedBitmap, x, y, resizedBitmap.getWidth(),
+                    resizedBitmap.getHeight() - y - navigationBarHeight, null, false);
+            resizedBitmap.recycle();
+        }
+
         return bitmap;
     }
 
