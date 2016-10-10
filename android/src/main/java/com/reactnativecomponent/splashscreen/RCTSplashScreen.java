@@ -3,15 +3,6 @@ package com.reactnativecomponent.splashscreen;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -23,57 +14,72 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
-import com.facebook.react.bridge.ReactMethod;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.ref.WeakReference;
 
 
-public class RCTSplashScreen extends ReactContextBaseJavaModule {
+public class RCTSplashScreen {
 
-    private static final int UIAnimationNone = 0;
-    private static final int UIAnimationFade = 1;
-    private static final int UIAnimationScale = 2;
+    public static final int UIAnimationNone = 0;
+    public static final int UIAnimationFade = 1;
+    public static final int UIAnimationScale = 2;
 
     private static Dialog dialog;
-    private ImageView imageView;
+    private static ImageView imageView;
 
-    private Activity activity;
+    private static WeakReference<Activity> wr_activity;
 
-    public RCTSplashScreen(ReactApplicationContext reactContext, Activity activity) {
-        super(reactContext);
-        this.activity = activity;
-        openSplashScreen();
+    protected static Activity getActivity() {
+        return wr_activity.get();
     }
 
-    protected Activity getActivity() {
-        return activity;
+    public static void openSplashScreen(Activity activity) {
+        openSplashScreen(activity, false);
     }
 
-    @Override
-    public String getName() {
-        return "SplashScreen";
-    }
-
-    @ReactMethod
-    public void close(final int animationType, final int duration, int delay) {
-        if(animationType == UIAnimationNone) {
-            delay = 0;
+    public static void openSplashScreen(final Activity activity, final boolean isFullScreen) {
+        if (activity == null) return;
+        wr_activity = new WeakReference<>(activity);
+        final int drawableId = getImageId();
+        if ((dialog != null && dialog.isShowing())||(drawableId == 0)) {
+            return;
         }
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        activity.runOnUiThread(new Runnable() {
             public void run() {
-                removeSplashScreen(animationType, duration);
+
+                if(!getActivity().isFinishing()) {
+                    Context context = getActivity();
+                    imageView = new ImageView(context);
+
+                    imageView.setImageResource(drawableId);
+
+                    LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+                    imageView.setLayoutParams(layoutParams);
+
+                    imageView.setImageResource(drawableId);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+                    dialog = new Dialog(context, isFullScreen ? android.R.style.Theme_Translucent_NoTitleBar_Fullscreen : android.R.style.Theme_Translucent_NoTitleBar);
+
+//                    if ((getActivity().getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN)
+//                            == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
+//                        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//                    }
+                    dialog.setContentView(imageView);
+                    dialog.setCancelable(false);
+                    dialog.show();
+                }
+
             }
-        }, delay);
+        });
     }
 
-
-    private void removeSplashScreen(final int animationType,final int duration) {
-        getActivity().runOnUiThread(new Runnable() {
+    public static void removeSplashScreen(Activity activity, final int animationType,final int duration) {
+        if (activity == null) {
+            activity = getActivity();
+            if(activity == null) return;
+        }
+        activity.runOnUiThread(new Runnable() {
             public void run() {
                 if (dialog != null && dialog.isShowing()) {
                     AnimationSet animationSet = new AnimationSet(true);
@@ -98,7 +104,7 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
                         animationSet.addAnimation(fadeOut);
                     }
 
-                    View view = ((ViewGroup)dialog.getWindow().getDecorView()).getChildAt(0);
+                    final View view = ((ViewGroup)dialog.getWindow().getDecorView()).getChildAt(0);
                     view.startAnimation(animationSet);
 
                     animationSet.setAnimationListener(new Animation.AnimationListener() {
@@ -110,12 +116,14 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
                         }
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            dialog.dismiss();
-                            dialog = null;
-                            imageView = null;
-
-                            //remove window background image to reduce overdrawing
-                            getActivity().getWindow().setBackgroundDrawable(null);
+                            view.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dialog.dismiss();
+                                    dialog = null;
+                                    imageView = null;
+                                }
+                            });
                         }
                     });
                 }
@@ -123,7 +131,7 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
         });
     }
 
-    private int getImageId() {
+    private static int getImageId() {
         int drawableId = getActivity().getResources().getIdentifier("splash", "drawable", getActivity().getClass().getPackage().getName());
         if (drawableId == 0) {
             drawableId = getActivity().getResources().getIdentifier("splash", "drawable", getActivity().getPackageName());
@@ -131,116 +139,5 @@ public class RCTSplashScreen extends ReactContextBaseJavaModule {
         return drawableId;
     }
 
-    private int getStatusBarHeight() {
-        int height = 0;
-        Resources resources = getActivity().getResources();
-        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            height = resources.getDimensionPixelSize(resourceId);
-        }
-        return height;
-    }
-
-//    private int getNavigationBarHeight() {
-//        int height = 0;
-//        Resources resources = getActivity().getResources();
-//        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-//        if (resourceId > 0) {
-//            height = resources.getDimensionPixelSize(resourceId);
-//        }
-//        return height;
-//    }
-
-    private Bitmap getClipBitmap(int drawableId) {
-
-        Resources resources = getActivity().getResources();
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getActivity().getResources(), drawableId);
-
-        if ((getActivity().getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN)
-                != WindowManager.LayoutParams.FLAG_FULLSCREEN) {
-
-            DisplayMetrics dm = resources.getDisplayMetrics();
-            int screenWidth = dm.widthPixels;
-            int screenHeight = dm.heightPixels;
-
-            int navigationBarHeight = 0;    //getNavigationBarHeight();
-            int statusBarHeight = 0;   //getStatusBarHeight();
-
-            statusBarHeight = getStatusBarHeight();
-
-            int width = bitmap.getWidth();
-            int height = bitmap.getHeight();
-            int newWidth = screenWidth;
-            int newHeight = screenHeight + navigationBarHeight;
-
-            float scaleWidth = ((float) newWidth) / width;
-            float scaleHeight = ((float) newHeight) / height;
-            Matrix matrix = new Matrix();
-            matrix.postScale(scaleWidth, scaleHeight);
-            Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width,
-                    height, matrix, true);
-            bitmap.recycle();
-
-            int y = statusBarHeight;
-            int x = 0;
-
-            bitmap = Bitmap.createBitmap(resizedBitmap, x, y, resizedBitmap.getWidth(),
-                    resizedBitmap.getHeight() - y - navigationBarHeight, null, false);
-            resizedBitmap.recycle();
-        }
-
-        return bitmap;
-    }
-
-
-    private void openSplashScreen() {
-        final int drawableId = getImageId();
-        if ((dialog != null && dialog.isShowing())||(drawableId == 0)) {
-            return;
-        }
-        getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                Context context = getActivity();
-
-                imageView = new ImageView(context);
-                imageView.setImageBitmap(getClipBitmap(drawableId));
-                LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-                imageView.setLayoutParams(layoutParams);
-
-                imageView.setBackgroundColor(Color.BLACK);
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-
-                dialog = new Dialog(context, android.R.style.Theme_Translucent_NoTitleBar);
-                if ((getActivity().getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN)
-                        == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
-                    dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                            WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                }
-                dialog.setContentView(imageView);
-                dialog.setCancelable(false);
-                dialog.show();
-            }
-        });
-    }
-
-    @Nullable
-    @Override
-    public Map<String, Object> getConstants() {
-        return Collections.unmodifiableMap(new HashMap<String, Object>() {
-            {
-                put("animationType", getAnimationTypes());
-            }
-            private Map<String, Object> getAnimationTypes() {
-                return Collections.unmodifiableMap(new HashMap<String, Object>() {
-                    {
-                        put("none", UIAnimationNone);
-                        put("fade", UIAnimationFade);
-                        put("scale", UIAnimationScale);
-                    }
-                });
-            }
-        });
-    }
 
 }

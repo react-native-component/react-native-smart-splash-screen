@@ -1,8 +1,5 @@
 package com.reactnativecomponent.splashscreen;
 
-
-import android.app.Activity;
-
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
@@ -16,20 +13,10 @@ import java.util.List;
 
 public class RCTSplashScreenPackage implements ReactPackage {
 
-    private Activity activity;
-    private RCTSplashScreen splashScreenModule;
-
-    public RCTSplashScreenPackage(Activity activity) {
-        super();
-        this.activity = activity;
-    }
-
-
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        splashScreenModule = new RCTSplashScreen(reactContext, activity);
         return Arrays.<NativeModule>asList(
-                splashScreenModule
+                new RCTSplashScreenModule(reactContext)
         );
     }
 
