@@ -22,7 +22,6 @@ public class RCTSplashScreenModule extends ReactContextBaseJavaModule {
     public String getName() {
         return "SplashScreen";
     }
-    
 
     @ReactMethod
     public void close(final int animationType, final int duration, int delay) {
