@@ -82,11 +82,9 @@ dependencies {
 }
 ```
 
-* Drag `drawable/splash.png` to `android/app/src/main/res/`
+* Add your own `drawable/splash.png` to `android/app/src/main/res/`, it is recommended to add `drawable-?dpi` folders that you need.
 
-* If you want change image, replace `res/drawable/splash.png`
-
-* In MainActivity.java (This step is available for react-native 0.25~0.29, if you're using react-native 0.30+, ignore this step and see next step)
+* in MainApplication.java
 
 ```
 ...
@@ -100,92 +98,35 @@ import com.reactnativecomponent.splashscreen.RCTSplashScreenPackage;    //import
 protected List<ReactPackage> getPackages() {
     return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-        new RCTSplashScreenPackage(this)    //register Module
+        new RCTSplashScreenPackage()    //register Module
     );
 }
 ...
 
 ```
 
-* If you're using react-native 0.30+, follow these steps
-
-    * remove ReactNativeHost `final` defination, and add the following codes in MainApplication.java
-
-    ```js
-    private ReactNativeHost reactNativeHost = new ReactNativeHost(this) {
-    //private final ReactNativeHost reactNativeHost = new ReactNativeHost(this) {
-        ...
-    }
-
-    public void setReactNativeHost(ReactNativeHost reactNativeHost) {
-        this.reactNativeHost = reactNativeHost;
-    }
-    ```
-
-    * add the following codes in MainActivity.java
-
-    ```js
-    ...
-    import com.reactnativecomponent.splashscreen.RCTSplashScreenPackage;    //import package
-    ...
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        MainApplication mainApplication=(MainApplication)this.getApplication();
-        mainApplication.setReactNativeHost( new ReactNativeHost(mainApplication) {
-            @Override
-            protected boolean getUseDeveloperSupport() {
-                return BuildConfig.DEBUG;
-            }
-
-            @Override
-            protected List<ReactPackage> getPackages() {
-                return Arrays.<ReactPackage>asList(
-                        new MainReactPackage(),
-                        new RCTSplashScreenPackage(MainActivity.this)  //register Module
-                );
-            }
-
-        });
-        super.onCreate(savedInstanceState);
-    }
-    ```
+* in MainActivity.java
+```
+...
+import com.reactnativecomponent.splashscreen.RCTSplashScreen;    //import RCTSplashScreen
+...
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    RCTSplashScreen.openSplashScreen(this);   //open splashscreen
+    //RCTSplashScreen.openSplashScreen(this, true);   //open splashscreen fullscreen
+    super.onCreate(savedInstanceState);
+}
+```
 
 * In `android/app/**/styles.xml`
 
 ```
 ...
-<!-- add LaunchScreen style -->
-<style name="LaunchScreen" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <item name="android:windowBackground">@drawable/splash</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowContentOverlay">@null</item>
+<!-- Base application theme. -->
+<style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="android:windowIsTranslucent">true</item>
 </style>
-...
-```
-
-* In `android/app/**/AndroidManifest.xml`
-
-```
-...
-<application
-      android:allowBackup="true"
-      android:label="@string/app_name"
-      android:icon="@mipmap/ic_launcher"
-      android:theme="@style/AppTheme">
-      <activity
-        android:name=".MainActivity"
-        android:label="@string/app_name"
-          android:configChanges="orientation|keyboardHidden"
-          android:theme="@style/LaunchScreen"> <!-- use LaunchScreen style -->
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-      </activity>
-      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-</application>
 ...
 ```
 
