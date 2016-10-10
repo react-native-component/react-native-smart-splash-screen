@@ -123,7 +123,7 @@ protected void onCreate(Bundle savedInstanceState) {
 ```
 ...
 <!-- Base application theme. -->
-<style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
     <!-- Customize your theme here. -->
     <item name="android:windowIsTranslucent">true</item>
 </style>
