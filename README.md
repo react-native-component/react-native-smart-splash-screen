@@ -33,7 +33,7 @@ npm install react-native-smart-splash-screen --save
 
 * delete your project's LaunchScreen.xib
 
-* Dray SplashScreenResource to your project *if you want change image, replace splash.png*
+* Dray SplashScreenResource folder to your project *if you want change image, replace splash.png*
 
 * In AppDelegate.m
 
