@@ -8,8 +8,6 @@
 A smart splash screen for React Native apps, written in JS, oc and java for cross-platform support.
 It works on iOS and Android.
 
-This component is compatible with React Native 0.25 and newer.
-
 ## Preview
 
 ![react-native-smart-splash-screen-ios-preview][1]
