@@ -6,7 +6,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -33,10 +32,10 @@ public class RCTSplashScreen {
     }
 
     public static void openSplashScreen(Activity activity) {
-        openSplashScreen(activity, false);
+        openSplashScreen(activity, false, ImageView.ScaleType.FIT_XY);
     }
 
-    public static void openSplashScreen(final Activity activity, final boolean isFullScreen) {
+    public static void openSplashScreen(final Activity activity, final boolean isFullScreen, final ImageView.ScaleType scaleType) {
         if (activity == null) return;
         wr_activity = new WeakReference<>(activity);
         final int drawableId = getImageId();
@@ -56,7 +55,7 @@ public class RCTSplashScreen {
                     imageView.setLayoutParams(layoutParams);
 
                     imageView.setImageResource(drawableId);
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    imageView.setScaleType(scaleType);
 
                     dialog = new Dialog(context, isFullScreen ? android.R.style.Theme_Translucent_NoTitleBar_Fullscreen : android.R.style.Theme_Translucent_NoTitleBar);
 
