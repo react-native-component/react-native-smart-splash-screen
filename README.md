@@ -111,7 +111,7 @@ import com.reactnativecomponent.splashscreen.RCTSplashScreen;    //import RCTSpl
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     RCTSplashScreen.openSplashScreen(this);   //open splashscreen
-    //RCTSplashScreen.openSplashScreen(this, true);   //open splashscreen fullscreen
+    //RCTSplashScreen.openSplashScreen(this, true, ImageView.ScaleType.FIT_XY);   //open splashscreen fullscreen
     super.onCreate(savedInstanceState);
 }
 ```
