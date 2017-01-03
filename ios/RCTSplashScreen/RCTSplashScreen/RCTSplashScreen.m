@@ -11,15 +11,26 @@ static RCTRootView *rootView = nil;
 
 RCT_EXPORT_MODULE(SplashScreen)
 
+
 + (void)open:(RCTRootView *)v {
+    [RCTSplashScreen open:v withImageNamed:@"splash"];
+}
+
+
++ (void)open:(RCTRootView *)v withImageNamed:(NSString *)imageName {
     rootView = v;
+
     UIImageView *view = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    view.image = [UIImage imageNamed:@"splash"];
+    
+    view.image = [UIImage imageNamed:imageName];
     
     [[NSNotificationCenter defaultCenter] removeObserver:rootView  name:RCTContentDidAppearNotification object:rootView];
     
     [rootView setLoadingView:view];
 }
+
+
+
 
 RCT_EXPORT_METHOD(close:(NSInteger *)animationType
                    duration:(NSInteger)duration
