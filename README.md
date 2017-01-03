@@ -29,9 +29,7 @@ npm install react-native-smart-splash-screen --save
 
 * In your project, Look for Header Search Paths and make sure it contains $(SRCROOT)/../node_modules/react-native-smart-splash-screen/ios/RCTSplashScreen/RCTSplashScreen
 
-* delete your project's LaunchScreen.xib
-
-* Dray SplashScreenResource folder to your project *if you want change image, replace splash.png*
+* Click on LaunchScreen.xib > right utilities panel "Attributes Inspector" > get the name of the image used (labeled "Image") (PS: you should follow the Apple XCode guide to set the LaunchScreen if there's not Image field set)
 
 * In AppDelegate.m
 
@@ -45,7 +43,7 @@ RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                            initialProperties:nil
                                                launchOptions:launchOptions];
 
-[RCTSplashScreen open:rootView]; //activate splashscreen
+[RCTSplashScreen open:rootView withImageNamed:@"image-name-from-LaunchScreen.xib"]; // activate splashscreen, imagename from LaunchScreen.xib
 
 rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
