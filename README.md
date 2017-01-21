@@ -8,6 +8,9 @@
 A smart splash screen for React Native apps, written in JS, oc and java for cross-platform support.
 It works on iOS and Android.
 
+## Notice
+It can only be used until react-native 0.4.0
+
 ## Preview
 
 ![react-native-smart-splash-screen-ios-preview][1]
@@ -16,7 +19,7 @@ It works on iOS and Android.
 ## Installation
 
 ```
-npm install react-native-smart-splash-screen --save
+npm install react-native-smart-splash-screen@untilRN0.40 --save
 ```
 
 ## Installation (iOS)
