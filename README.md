@@ -9,6 +9,7 @@ A smart splash screen for React Native apps, written in JS, oc and java for cros
 It works on iOS and Android.
 
 ## Notice
+
 It can only be used until react-native 0.4.0
 
 ## Preview
