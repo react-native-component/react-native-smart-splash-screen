@@ -29,14 +29,28 @@ RCT_EXPORT_MODULE(SplashScreen)
     [rootView setLoadingView:view];
 }
 
-
-
-
-RCT_EXPORT_METHOD(close:(NSInteger *)animationType
-                   duration:(NSInteger)duration
-                   delay:(NSInteger)delay) {
+RCT_EXPORT_METHOD(close:(NSDictionary *)options) {
     if (!rootView) {
         return;
+    }
+    
+    int animationType = UIAnimationNone;
+    int duration = 0;
+    int delay = 0;
+    
+    if(options != nil) {
+        
+        NSArray *keys = [options allKeys];
+        
+        if([keys containsObject:@"animationType"]) {
+            animationType = [[options objectForKey:@"animationType"] intValue];
+        }
+        if([keys containsObject:@"duration"]) {
+            duration = [[options objectForKey:@"duration"] intValue];
+        }
+        if([keys containsObject:@"delay"]) {
+            delay = [[options objectForKey:@"delay"] intValue];
+        }
     }
 
     if(animationType == UIAnimationNone) {
