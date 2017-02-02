@@ -16,12 +16,12 @@ It works on iOS and Android.
 ## Installation
 
 ```
-npm install react-native-smart-splash-screen@untilRN0.40 --save
+npm install react-native-smart-splash-screen --save
 ```
 
 ## Notice
 
-It can only be used until react-native 0.4.0 for ios, if you want to use the latest package, use `npm install react-native-smart-splash-screen --save`
+It can only be used greater-than-equal react-native 0.4.0 for ios, if you want to use the package less-than react-native 0.4.0, use `npm install react-native-smart-splash-screen@untilRN0.40 --save`
 
 ## Installation (iOS)
 
