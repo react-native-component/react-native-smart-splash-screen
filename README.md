@@ -145,7 +145,12 @@ see [ReactNativeComponentDemos][0]
 import SplashScreen from 'react-native-smart-splash-screen'
 ...
 componentDidMount () {
-     SplashScreen.close(SplashScreen.animationType.scale, 850, 500)
+     //SplashScreen.close(SplashScreen.animationType.scale, 850, 500)
+     SplashScreen.close({
+        animationType: SplashScreen.animationType.scale,
+        duration: 850,
+        delay: 500,
+     })
 }
 ...
 
@@ -162,5 +167,5 @@ componentDidMount () {
 
 
 [0]: https://github.com/cyqresig/ReactNativeComponentDemos
-[1]: http://cyqresig.github.io/img/react-native-smart-splash-screen-preview-ios-v1.0.0.gif
-[2]: http://cyqresig.github.io/img/react-native-smart-splash-screen-preview-android-v1.0.3.gif
+[1]: http://cyqresig.github.io/img/react-native-smart-splash-screen-preview-ios-v2.3.0.gif
+[2]: http://cyqresig.github.io/img/react-native-smart-splash-screen-preview-android-v2.3.0.gif
