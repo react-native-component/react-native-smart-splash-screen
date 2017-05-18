@@ -23,7 +23,8 @@ RCT_EXPORT_MODULE(SplashScreen)
     UIImageView *view = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     
     view.image = [UIImage imageNamed:imageName];
-    
+    view.contentMode = UIViewContentModeScaleAspectFit;
+
     [[NSNotificationCenter defaultCenter] removeObserver:rootView  name:RCTContentDidAppearNotification object:rootView];
     
     [rootView setLoadingView:view];
