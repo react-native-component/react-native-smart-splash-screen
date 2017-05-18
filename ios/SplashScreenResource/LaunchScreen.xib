@@ -7,7 +7,7 @@
     <objects>
         <view contentMode="scaleAspectFill" id="iN0-l3-epB">
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash.png" translatesAutoresizingMaskIntoConstraints="NO" id="ZkI-RL-69Z">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="splash.png" translatesAutoresizingMaskIntoConstraints="NO" id="ZkI-RL-69Z">
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
