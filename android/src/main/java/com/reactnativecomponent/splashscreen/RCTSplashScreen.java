@@ -32,7 +32,7 @@ public class RCTSplashScreen {
     }
 
     public static void openSplashScreen(Activity activity) {
-        openSplashScreen(activity, false, ImageView.ScaleType.FIT_XY);
+        openSplashScreen(activity, false, ImageView.ScaleType.CENTER_CROP);
     }
 
     public static void openSplashScreen(final Activity activity, final boolean isFullScreen, final ImageView.ScaleType scaleType) {
