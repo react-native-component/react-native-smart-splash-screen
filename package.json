@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/react-native-component/react-native-smart-splash-screen.git"
+    "url": "git+https://github.com/FiW/react-native-smart-splash-screen.git"
   },
   "keywords": [
     "react-native",
