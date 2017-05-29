@@ -1,6 +1,6 @@
 {
   "name": "react-native-smart-splash-screen",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "A smart splash screen for React Native apps",
   "main": "SplashScreen.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FiW/react-native-smart-splash-screen.git"
+    "url": "git+https://github.com/react-native-component/react-native-smart-splash-screen.git"
   },
   "keywords": [
     "react-native",
