@@ -30,6 +30,18 @@ RCT_EXPORT_MODULE(SplashScreen)
     [rootView setLoadingView:view];
 }
 
++ (void)open:(RCTRootView *)v withXibNamed:(NSString *)xibName {
+  rootView = v;
+
+  NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:xibName owner:nil options:nil];
+  UIView *view = [nibContents lastObject];
+  view.frame = rootView.bounds;
+
+  [[NSNotificationCenter defaultCenter] removeObserver:rootView  name:RCTContentDidAppearNotification object:rootView];
+
+  [rootView setLoadingView:view];
+}
+
 RCT_EXPORT_METHOD(close:(NSDictionary *)options) {
     if (!rootView) {
         return;
