@@ -16,18 +16,30 @@ RCT_EXPORT_MODULE(SplashScreen)
     [RCTSplashScreen open:v withImageNamed:@"splash"];
 }
 
-
 + (void)open:(RCTRootView *)v withImageNamed:(NSString *)imageName {
-    rootView = v;
-
     UIImageView *view = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    
+
     view.image = [UIImage imageNamed:imageName];
     view.contentMode = UIViewContentModeScaleAspectFill;
 
-    [[NSNotificationCenter defaultCenter] removeObserver:rootView  name:RCTContentDidAppearNotification object:rootView];
-    
-    [rootView setLoadingView:view];
+    [self open:v withView:view];
+}
+
++ (void)open:(RCTRootView *)v withXibNamed:(NSString *)xibName {
+    NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:xibName owner:nil options:nil];
+
+    UIView *view = [nibContents lastObject];
+    view.frame = rootView.bounds;
+
+    [self open:v withView:view];
+}
+
++ (void)open:(RCTRootView *)v withView:(UIView *)view {
+  rootView = v;
+
+  [[NSNotificationCenter defaultCenter] removeObserver:rootView  name:RCTContentDidAppearNotification object:rootView];
+
+  [rootView setLoadingView:view];
 }
 
 RCT_EXPORT_METHOD(close:(NSDictionary *)options) {
