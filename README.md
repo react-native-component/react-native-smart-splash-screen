@@ -33,6 +33,9 @@ It can only be used greater-than-equal react-native 0.4.0 for ios, if you want t
 
 * In your project, Look for Header Search Paths and make sure it contains $(SRCROOT)/../node_modules/react-native-smart-splash-screen/ios/RCTSplashScreen/RCTSplashScreen
 
+
+### Using an Image
+
 * delete your project's LaunchScreen.xib
 
 * Drag SplashScreenResource folder to your project *if you want change image, replace splash.png or add a image with your custom name*
@@ -51,6 +54,43 @@ RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
 
 //[RCTSplashScreen open:rootView];
 [RCTSplashScreen open:rootView withImageNamed:@"splash"]; // activate splashscreen, imagename from LaunchScreen.xib
+
+rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
+
+self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+UIViewController *rootViewController = [UIViewController new];
+rootViewController.view = rootView;
+self.window.rootViewController = rootViewController;
+[self.window makeKeyAndVisible];
+return YES;
+
+```
+
+### Using a Xib
+
+* Design your XIB in Xcode, setting proper autolayout constraints
+
+* Configure your project:
+  * Click on your main project file (the one that represents the .xcodeproj)
+  * Click on your Target
+  * Select "General"
+  * Scroll down to "App Icons and Launch Images" 
+  * Set your "Launch Screen File" to the XIB you're using
+
+* In AppDelegate.m
+
+```
+
+...
+#import "RCTSplashScreen.h" //import interface
+...
+RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
+                                                  moduleName:@"ReactNativeComponents"
+                                           initialProperties:nil
+                                               launchOptions:launchOptions];
+
+//[RCTSplashScreen open:rootView];
+[RCTSplashScreen open:rootView withXibNamed:@"LaunchScreen"]; // activate splashscreen, using LaunchScreen.xib
 
 rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
