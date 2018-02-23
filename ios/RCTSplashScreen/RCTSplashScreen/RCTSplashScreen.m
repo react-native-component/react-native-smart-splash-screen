@@ -30,6 +30,14 @@ RCT_EXPORT_MODULE(SplashScreen)
     [rootView setLoadingView:view];
 }
 
++ (void)open:(RCTRootView *)v withLoadingView:(UIView *)loadingView {
+  rootView = v;
+
+  [[NSNotificationCenter defaultCenter] removeObserver:rootView  name:RCTContentDidAppearNotification object:rootView];
+
+  [rootView setLoadingView:loadingView];
+}
+
 RCT_EXPORT_METHOD(close:(NSDictionary *)options) {
     if (!rootView) {
         return;
