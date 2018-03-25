@@ -5,8 +5,8 @@
 [![npm](https://img.shields.io/npm/dt/react-native-smart-splash-screen.svg)](https://www.npmjs.com/package/react-native-smart-splash-screen)
 [![npm](https://img.shields.io/npm/l/react-native-smart-splash-screen.svg)](https://github.com/react-native-component/react-native-smart-splash-screen/blob/master/LICENSE)
 
-A smart splash screen for React Native apps, written in JS, oc and java for cross-platform support.
-It works on iOS and Android.
+A smart splash screen for [React Native](https://github.com/facebook/react-native) apps, written in JS, oc and java for 
+cross-platform support. It works on iOS and Android.
 
 ## Preview
 
@@ -21,7 +21,7 @@ npm install react-native-smart-splash-screen --save
 
 ## Notice
 
-It can only be used greater-than-equal react-native 0.4.0 for ios, if you want to use the package less-than react-native 0.4.0, use `npm install react-native-smart-splash-screen@untilRN0.40 --save`
+React-native-smart-splash-screen can only be used with react-native version >= 0.4.0 for ios, if you want to use the package with react-native version < 0.4.0, use `npm install react-native-smart-splash-screen@untilRN0.40 --save`
 
 ## Installation (iOS)
 
@@ -158,10 +158,10 @@ componentDidMount () {
 
 ## Method
 
-* close(animationType, duration, delay)
+* `close(animationType, duration, delay)`
   close splash screen with custom animation
 
-  * animationType: determine the type of animation. enum(animationType.none, animationType.fade, animationType.scale)
+  * animationType: determine the type of  `animation.enum(animationType.none, animationType.fade, animationType.scale)`
   * duration: determine the duration of animation
   * delay: determine the delay of animation
 
