@@ -31,6 +31,10 @@ public class RCTSplashScreen {
         return wr_activity.get();
     }
 
+    protected static boolean hasActivity() {
+        return (wr_activity != null);
+    }
+
     public static void openSplashScreen(Activity activity) {
         openSplashScreen(activity, false);
     }
@@ -49,7 +53,7 @@ public class RCTSplashScreen {
         activity.runOnUiThread(new Runnable() {
             public void run() {
 
-                if(!getActivity().isFinishing()) {
+                if(hasActivity() && !getActivity().isFinishing()) {
                     Context context = getActivity();
                     imageView = new ImageView(context);
 
@@ -78,9 +82,10 @@ public class RCTSplashScreen {
     }
 
     public static void removeSplashScreen(Activity activity, final int animationType,final int duration) {
-        if (activity == null) {
+        if (hasActivity()) {
             activity = getActivity();
-            if(activity == null) return;
+        } else {
+            return;
         }
         activity.runOnUiThread(new Runnable() {
             public void run() {
