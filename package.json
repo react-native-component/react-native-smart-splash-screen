@@ -1,6 +1,6 @@
 {
   "name": "react-native-smart-splash-screen",
-  "version": "2.3.5",
+  "version": "3.0.0",
   "description": "A smart splash screen for React Native apps",
   "main": "SplashScreen.js",
   "scripts": {
@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/react-native-component/react-native-smart-splash-screen#readme",
   "peerDependencies": {
-    "react-native": ">=0.40.0"
+    "react-native": ">=0.47.0"
   }
 }
