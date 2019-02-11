@@ -122,9 +122,11 @@ public class RCTSplashScreen {
                             view.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    dialog.dismiss();
-                                    dialog = null;
-                                    imageView = null;
+                                    if (dialog != null && dialog.isShowing()) {
+                                        dialog.dismiss();
+                                        dialog = null;
+                                        imageView = null;
+                                    }
                                 }
                             });
                         }
