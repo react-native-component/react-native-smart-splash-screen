@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 
 import java.lang.ref.WeakReference;
 
+import pl.droidsonroids.gif.GifImageView;
+
 
 public class RCTSplashScreen {
 
@@ -23,7 +25,7 @@ public class RCTSplashScreen {
     public static final int UIAnimationScale = 2;
 
     private static Dialog dialog;
-    private static ImageView imageView;
+    private static GifImageView imageView;
 
     private static WeakReference<Activity> wr_activity;
 
@@ -40,10 +42,10 @@ public class RCTSplashScreen {
     }
 
     public static void openSplashScreen(Activity activity, boolean isFullScreen) {
-        openSplashScreen(activity, isFullScreen, ImageView.ScaleType.CENTER_CROP);
+        openSplashScreen(activity, isFullScreen, GifImageView.ScaleType.CENTER_CROP);
     }
 
-    public static void openSplashScreen(final Activity activity, final boolean isFullScreen, final ImageView.ScaleType scaleType) {
+    public static void openSplashScreen(final Activity activity, final boolean isFullScreen, final GifImageView.ScaleType scaleType) {
         if (activity == null) return;
         wr_activity = new WeakReference<>(activity);
         final int drawableId = getImageId();
@@ -55,7 +57,7 @@ public class RCTSplashScreen {
 
                 if(hasActivity() && !getActivity().isFinishing()) {
                     Context context = getActivity();
-                    imageView = new ImageView(context);
+                    imageView = new GifImageView(context);
 
                     imageView.setImageResource(drawableId);
 
