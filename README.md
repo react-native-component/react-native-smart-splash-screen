@@ -8,6 +8,10 @@
 A smart splash screen for [React Native](https://github.com/facebook/react-native) apps, written in JS, oc and java for 
 cross-platform support. It works on iOS and Android.
 
+
+##Tutorial for installation
+(https://www.youtube.com/watch?v=XaKqek_m2mI)
+
 ## Preview
 
 ![react-native-smart-splash-screen-ios-preview][1]

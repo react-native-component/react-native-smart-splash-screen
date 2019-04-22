@@ -69,12 +69,25 @@ public class RCTSplashScreen {
 
                     dialog = new Dialog(context, isFullScreen ? android.R.style.Theme_Translucent_NoTitleBar_Fullscreen : android.R.style.Theme_Translucent_NoTitleBar);
 
-//                    if ((getActivity().getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN)
-//                            == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
-//                        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//                    }
                     dialog.setContentView(imageView);
+                    dialog.setCancelable(false);
+                    dialog.show();
+                }
+
+            }
+        });
+    }
+
+    public static void openSplashScreen(final Activity activity, final int viewResource, final boolean isFullScreen, final GifImageView.ScaleType scaleType) {
+        if (activity == null) return;
+        wr_activity = new WeakReference<>(activity);
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                if(hasActivity() && !getActivity().isFinishing()) {
+                    Context context = getActivity();
+
+                    dialog = new Dialog(context, isFullScreen ? android.R.style.Theme_Translucent_NoTitleBar_Fullscreen : android.R.style.Theme_Translucent_NoTitleBar);
+                    dialog.setContentView(viewResource);
                     dialog.setCancelable(false);
                     dialog.show();
                 }
