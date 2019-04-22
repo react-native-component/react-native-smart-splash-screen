@@ -177,6 +177,41 @@ protected void onCreate(Bundle savedInstanceState) {
 ...
 ```
 
+### Using an Image
+Add splash.png to drawable@* folders
+
+### Using Custom Layout
+Create splash_screen.xml file inside `res/layout`
+
+ex:
+```
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#333"
+    android:orientation="vertical"
+    >
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/mylogo_logo" />
+</RelativeLayout>
+```
+
+Then modify onCreate method in MainActivity.java:
+
+```java
+  @Override
+  protected void onCreate(Bundle saveInstanceState) {
+    RCTSplashScreen.openSplashScreen(this, R.layout.splash_screen, true , ImageView.ScaleType.CENTER_INSIDE);
+    super.onCreate(saveInstanceState);
+  }
+```
+
+
 ## Full Demo
 
 see [ReactNativeComponentDemos][0]
