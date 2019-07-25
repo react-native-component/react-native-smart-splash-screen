@@ -112,6 +112,7 @@ protected List<ReactPackage> getPackages() {
 ```
 ...
 import com.reactnativecomponent.splashscreen.RCTSplashScreen;    //import RCTSplashScreen
+import android.os.Bundle;
 ...
 @Override
 protected void onCreate(Bundle savedInstanceState) {
