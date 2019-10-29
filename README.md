@@ -5,8 +5,12 @@
 [![npm](https://img.shields.io/npm/dt/react-native-smart-splash-screen.svg)](https://www.npmjs.com/package/react-native-smart-splash-screen)
 [![npm](https://img.shields.io/npm/l/react-native-smart-splash-screen.svg)](https://github.com/react-native-component/react-native-smart-splash-screen/blob/master/LICENSE)
 
-A smart splash screen for React Native apps, written in JS, oc and java for cross-platform support.
-It works on iOS and Android.
+A smart splash screen for [React Native](https://github.com/facebook/react-native) apps, written in JS, oc and java for 
+cross-platform support. It works on iOS and Android.
+
+
+##Tutorial for installation
+(https://www.youtube.com/watch?v=XaKqek_m2mI)
 
 ## Preview
 
@@ -21,7 +25,7 @@ npm install react-native-smart-splash-screen --save
 
 ## Notice
 
-It can only be used greater-than-equal react-native 0.4.0 for ios, if you want to use the package less-than react-native 0.4.0, use `npm install react-native-smart-splash-screen@untilRN0.40 --save`
+React-native-smart-splash-screen can only be used with react-native version >= 0.4.0 for ios, if you want to use the package with react-native version < 0.4.0, use `npm install react-native-smart-splash-screen@untilRN0.40 --save`
 
 ## Installation (iOS)
 
@@ -32,6 +36,9 @@ It can only be used greater-than-equal react-native 0.4.0 for ios, if you want t
 * Look for Header Search Paths and make sure it contains $(SRCROOT)/../../../react-native/React as recursive.
 
 * In your project, Look for Header Search Paths and make sure it contains $(SRCROOT)/../node_modules/react-native-smart-splash-screen/ios/RCTSplashScreen/RCTSplashScreen
+
+
+### Using an Image
 
 * delete your project's LaunchScreen.xib
 
@@ -51,6 +58,43 @@ RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
 
 //[RCTSplashScreen open:rootView];
 [RCTSplashScreen open:rootView withImageNamed:@"splash"]; // activate splashscreen, imagename from LaunchScreen.xib
+
+rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
+
+self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+UIViewController *rootViewController = [UIViewController new];
+rootViewController.view = rootView;
+self.window.rootViewController = rootViewController;
+[self.window makeKeyAndVisible];
+return YES;
+
+```
+
+### Using a Xib
+
+* Design your XIB in Xcode, setting proper autolayout constraints
+
+* Configure your project:
+  * Click on your main project file (the one that represents the .xcodeproj)
+  * Click on your Target
+  * Select "General"
+  * Scroll down to "App Icons and Launch Images" 
+  * Set your "Launch Screen File" to the XIB you're using
+
+* In AppDelegate.m
+
+```
+
+...
+#import "RCTSplashScreen.h" //import interface
+...
+RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
+                                                  moduleName:@"ReactNativeComponents"
+                                           initialProperties:nil
+                                               launchOptions:launchOptions];
+
+//[RCTSplashScreen open:rootView];
+[RCTSplashScreen open:rootView withXibNamed:@"LaunchScreen"]; // activate splashscreen, using LaunchScreen.xib
 
 rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
@@ -133,6 +177,41 @@ protected void onCreate(Bundle savedInstanceState) {
 ...
 ```
 
+### Using an Image
+Add splash.png to drawable@* folders
+
+### Using Custom Layout
+Create splash_screen.xml file inside `res/layout`
+
+ex:
+```
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#333"
+    android:orientation="vertical"
+    >
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/mylogo_logo" />
+</RelativeLayout>
+```
+
+Then modify onCreate method in MainActivity.java:
+
+```java
+  @Override
+  protected void onCreate(Bundle saveInstanceState) {
+    RCTSplashScreen.openSplashScreen(this, R.layout.splash_screen, true , ImageView.ScaleType.CENTER_INSIDE);
+    super.onCreate(saveInstanceState);
+  }
+```
+
+
 ## Full Demo
 
 see [ReactNativeComponentDemos][0]
@@ -158,10 +237,10 @@ componentDidMount () {
 
 ## Method
 
-* close(animationType, duration, delay)
+* `close(animationType, duration, delay)`
   close splash screen with custom animation
 
-  * animationType: determine the type of animation. enum(animationType.none, animationType.fade, animationType.scale)
+  * animationType: determine the type of  `animation.enum(animationType.none, animationType.fade, animationType.scale)`
   * duration: determine the duration of animation
   * delay: determine the delay of animation
 

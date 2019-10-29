@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 
 import java.lang.ref.WeakReference;
 
+import pl.droidsonroids.gif.GifImageView;
+
 
 public class RCTSplashScreen {
 
@@ -23,7 +25,7 @@ public class RCTSplashScreen {
     public static final int UIAnimationScale = 2;
 
     private static Dialog dialog;
-    private static ImageView imageView;
+    private static GifImageView imageView;
 
     private static WeakReference<Activity> wr_activity;
 
@@ -31,15 +33,19 @@ public class RCTSplashScreen {
         return wr_activity.get();
     }
 
+    protected static boolean hasActivity() {
+        return (wr_activity != null);
+    }
+
     public static void openSplashScreen(Activity activity) {
         openSplashScreen(activity, false);
     }
 
     public static void openSplashScreen(Activity activity, boolean isFullScreen) {
-        openSplashScreen(activity, isFullScreen, ImageView.ScaleType.CENTER_CROP);
+        openSplashScreen(activity, isFullScreen, GifImageView.ScaleType.CENTER_CROP);
     }
 
-    public static void openSplashScreen(final Activity activity, final boolean isFullScreen, final ImageView.ScaleType scaleType) {
+    public static void openSplashScreen(final Activity activity, final boolean isFullScreen, final GifImageView.ScaleType scaleType) {
         if (activity == null) return;
         wr_activity = new WeakReference<>(activity);
         final int drawableId = getImageId();
@@ -49,9 +55,9 @@ public class RCTSplashScreen {
         activity.runOnUiThread(new Runnable() {
             public void run() {
 
-                if(!getActivity().isFinishing()) {
+                if(hasActivity() && !getActivity().isFinishing()) {
                     Context context = getActivity();
-                    imageView = new ImageView(context);
+                    imageView = new GifImageView(context);
 
                     imageView.setImageResource(drawableId);
 
@@ -63,11 +69,6 @@ public class RCTSplashScreen {
 
                     dialog = new Dialog(context, isFullScreen ? android.R.style.Theme_Translucent_NoTitleBar_Fullscreen : android.R.style.Theme_Translucent_NoTitleBar);
 
-//                    if ((getActivity().getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN)
-//                            == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
-//                        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//                    }
                     dialog.setContentView(imageView);
                     dialog.setCancelable(false);
                     dialog.show();
@@ -77,10 +78,29 @@ public class RCTSplashScreen {
         });
     }
 
+    public static void openSplashScreen(final Activity activity, final int viewResource, final boolean isFullScreen, final GifImageView.ScaleType scaleType) {
+        if (activity == null) return;
+        wr_activity = new WeakReference<>(activity);
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                if(hasActivity() && !getActivity().isFinishing()) {
+                    Context context = getActivity();
+
+                    dialog = new Dialog(context, isFullScreen ? android.R.style.Theme_Translucent_NoTitleBar_Fullscreen : android.R.style.Theme_Translucent_NoTitleBar);
+                    dialog.setContentView(viewResource);
+                    dialog.setCancelable(false);
+                    dialog.show();
+                }
+
+            }
+        });
+    }
+
     public static void removeSplashScreen(Activity activity, final int animationType,final int duration) {
-        if (activity == null) {
+        if (hasActivity()) {
             activity = getActivity();
-            if(activity == null) return;
+        } else {
+            return;
         }
         activity.runOnUiThread(new Runnable() {
             public void run() {
@@ -122,9 +142,11 @@ public class RCTSplashScreen {
                             view.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    dialog.dismiss();
-                                    dialog = null;
-                                    imageView = null;
+                                    if (dialog != null && dialog.isShowing()) {
+                                        dialog.dismiss();
+                                        dialog = null;
+                                        imageView = null;
+                                    }
                                 }
                             });
                         }
